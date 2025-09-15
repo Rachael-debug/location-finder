@@ -43,17 +43,18 @@ export default function Map() {
         
 
         // Remove old marker
-        if (markerRef.current) markerRef.current.remove();
-        console.log("API Response:", data.features);
-        console.log("locate:", data.features?.[0]?.properties.full_address);
+        if (mapRef.current) {
+          markerRef.current = new mapboxgl.Marker({ color: "blue" })
+            .setLngLat(coords)
+            .setPopup(
+              new mapboxgl.Popup().setHTML(
+                `<p class="text-blue-700">${placeName}</p>`
+              )
+            )
+            .addTo(mapRef.current);
 
-        // Add new marker + popup
-        markerRef.current = new mapboxgl.Marker({ color: "blue" })
-          .setLngLat(coords)
-          .setPopup(new mapboxgl.Popup().setHTML(`<p class="text-blue-700">${placeName}</p>`))
-          .addTo(mapRef.current);
-
-        markerRef.current.togglePopup(); // auto-open popup
+          markerRef.current.togglePopup(); // auto-open popup
+        }
       } catch (err) {
         console.error("Reverse geocoding failed:", err);
       }
