@@ -9,9 +9,9 @@ export default function Map() {
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markerRef = useRef<mapboxgl.Marker | null>(null);
 
-  const [lng, setLng] = useState<number>(-98.5795); 
-  const [lat, setLat] = useState<number>(39.8283); 
-  const [zoom, setZoom] = useState<number>(10);
+  const [lng] = useState<number>(-98.5795); 
+  const [lat] = useState<number>(39.8283); 
+  const [zoom] = useState<number>(10);
 
   // Initialize map
   useEffect(() => {
