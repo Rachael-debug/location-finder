@@ -147,7 +147,7 @@ export default function SearchForm({onSearch}: onSearchProps) {
             </form>
 
             {suggestions.length > 0 && (
-                <ul className="z-10 border rounded-md mt-0 lg:mt-10 shadow absolute top-1/2 left-1/4 lg:left-1/2 sm:right-0 transform -translate-x-1/6 lg:-translate-x-1/2 -translate-y-1/2 bg-accent p-2">
+                <ul className="z-10 border rounded-md mt-0 lg:mt-10 shadow absolute top-1/2 left-1/4 lg:left-1/2 sm:right-0 transform -translate-x-1/6 lg:-translate-x-1/2 -translate-y-1/2 bg-accent p-2 h-64 overflow-y-auto lg:h-fit">
                 {suggestions.map((s) => (
                     <div className="flex items-center gap-2 hover:bg-background hover:rounded-md cursor-pointer px-1 py-0.5 leading-none" key={s.mapbox_id}>
                         <MapPin className="h-4 w-4"/>
