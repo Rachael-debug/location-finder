@@ -27,7 +27,7 @@ export default function Map() {
     // Add navigation controls (zoom buttons, compass)
     mapRef.current.addControl(new mapboxgl.NavigationControl(), "top-right");
 
-     // ✅ Listen for clicks
+     // Listen for clicks
     mapRef.current.on("click", async (e) => {
       const coords: [number, number] = [e.lngLat.lng, e.lngLat.lat];
       console.log("Clicked coords:", coords);

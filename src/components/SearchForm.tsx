@@ -33,6 +33,10 @@ export default function SearchForm({onSearch}: onSearchProps) {
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
     const fetchSuggestions = async (query: string) => {
+        if (!query) {
+            setSuggestions([]);
+            return;
+        }
         try {
              const response = await fetch(
                 `https://api.mapbox.com/search/searchbox/v1/suggest?q=${encodeURIComponent(
@@ -53,6 +57,10 @@ export default function SearchForm({onSearch}: onSearchProps) {
             // console.log("Searching for:", data.location);
             console.log("API Response:", result);
             setSuggestions(result.suggestions || []);
+            if (result.suggestions.length === 0) {
+                console.log("No suggestions found.");
+            }
+            
         } catch (error) {
             console.error("Autocomplete failed:", error);
         }
@@ -60,10 +68,12 @@ export default function SearchForm({onSearch}: onSearchProps) {
 
     const handleLocationSearch = (e:React.ChangeEvent<HTMLInputElement>) => {
         const query = e.target.value;
+
         setValue("location", query);
 
         if (!query) {
         setSuggestions([]);
+        if (debounceRef.current) clearTimeout(debounceRef.current);
         return;
         }
         if (query.length < 3) {
@@ -79,7 +89,7 @@ export default function SearchForm({onSearch}: onSearchProps) {
         // Set new debounce timer
         debounceRef.current = setTimeout(() => {
         fetchSuggestions(query);
-        }, 2000); // ⏳ wait 2000ms after typing
+        }, 1000); // ⏳ wait 1000ms after typing
 
         
     };
@@ -128,7 +138,7 @@ export default function SearchForm({onSearch}: onSearchProps) {
                     id="location" 
                     name="location"
                     disabled={isSubmitting}
-                    onChange={handleLocationSearch}
+                    onInput={handleLocationSearch}
                     placeholder="Looking for a hospital in USA? Just Search..." 
                     className="bg-background h-13 pl-10 dark:bg-background "
                     />
