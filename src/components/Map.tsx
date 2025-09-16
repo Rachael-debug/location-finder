@@ -41,8 +41,11 @@ export default function Map() {
 
         const placeName = data.features?.[0]?.properties.full_address || "Unknown location";
         
-
         // Remove old marker
+        if (markerRef.current) {
+          markerRef.current.remove();
+        }
+        
         if (mapRef.current) {
           markerRef.current = new mapboxgl.Marker({ color: "blue" })
             .setLngLat(coords)
